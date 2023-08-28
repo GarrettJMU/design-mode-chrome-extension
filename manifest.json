@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "DesignMode Toggle",
+  "version": "1.0",
+  "description": "Toggle designMode on/off for Chrome.",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "activeTab"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  }
+}
