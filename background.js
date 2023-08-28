@@ -1,8 +1,29 @@
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.action === "toggleDesignMode") {
-        chrome.scripting.executeScript({
-            target: {tabId: message.tabId},
-            code: `document.designMode = "${message.mode}";`
-        });
+    switch (message.action) {
+        case "toggleDesignMode":
+            chrome.scripting.executeScript({
+                target: {tabId: message.tabId},
+                function: setDesignMode,
+                args: [message.mode]
+            });
+            break;
+
+        case "getDesignModeStatus":
+            chrome.scripting.executeScript({
+                target: {tabId: message.tabId},
+                function: getDesignModeStatus,
+                args: []
+            }, ([result]) => {
+                sendResponse(result.result);
+            });
+            return true;  // this will keep the message channel open for the asynchronous response
     }
 });
+
+function setDesignMode(mode) {
+    document.designMode = mode;
+}
+
+function getDesignModeStatus() {
+    return document.designMode;
+}
